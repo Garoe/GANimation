@@ -24,7 +24,7 @@ class TBVisualizer:
     def display_current_results(self, visuals, it, is_train, save_visuals=False):
         for label, image_numpy in list(visuals.items()):
             sum_name = '{}/{}'.format('Train' if is_train else 'Test', label)
-            self._writer.add_image(sum_name, image_numpy, it)
+            self._writer.add_image(sum_name, np.transpose(image_numpy, (2, 0, 1)), it)
 
             if save_visuals:
                 util.save_image(image_numpy,
