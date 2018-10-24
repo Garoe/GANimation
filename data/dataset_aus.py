@@ -1,5 +1,6 @@
 import os.path
 import torchvision.transforms as transforms
+from torchvision.transforms.functional import crop, resize
 from data.dataset import DatasetBase
 from PIL import Image
 import random
@@ -41,7 +42,9 @@ class AusDataset(DatasetBase):
         desired_cond = self._generate_random_cond()
 
         # transform data
-        img = self._transform(Image.fromarray(real_img))
+        img = crop(img=Image.fromarray(real_img), i=20, j=0, h=178, w=178)
+        img = resize(img, self._opt.image_size)
+        img = self._transform(img)
 
         # pack data
         sample = {'real_img': img,
