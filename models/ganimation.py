@@ -389,14 +389,14 @@ class GANimation(BaseModel):
         self._current_lr_G -= lr_decay_G
         for param_group in self._optimizer_G.param_groups:
             param_group['lr'] = self._current_lr_G
-        print('update G learning rate: %f -> %f' %  (self._current_lr_G + lr_decay_G, self._current_lr_G))
+        print(('update G learning rate: %f -> %f' %  (self._current_lr_G + lr_decay_G, self._current_lr_G)))
 
         # update learning rate D
         lr_decay_D = self._opt.lr_D / self._opt.nepochs_decay
         self._current_lr_D -= lr_decay_D
         for param_group in self._optimizer_D.param_groups:
             param_group['lr'] = self._current_lr_D
-        print('update D learning rate: %f -> %f' %  (self._current_lr_D + lr_decay_D, self._current_lr_D))
+        print(('update D learning rate: %f -> %f' %  (self._current_lr_D + lr_decay_D, self._current_lr_D)))
 
     def _l1_loss_with_target_gradients(self, input, target):
         return torch.sum(torch.abs(input - target)) / input.data.nelement()

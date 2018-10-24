@@ -22,7 +22,7 @@ class TBVisualizer:
         self._writer.close()
 
     def display_current_results(self, visuals, it, is_train, save_visuals=False):
-        for label, image_numpy in visuals.items():
+        for label, image_numpy in list(visuals.items()):
             sum_name = '{}/{}'.format('Train' if is_train else 'Test', label)
             self._writer.add_image(sum_name, image_numpy, it)
 
@@ -34,7 +34,7 @@ class TBVisualizer:
         self._writer.export_scalars_to_json(self._tb_path)
 
     def plot_scalars(self, scalars, it, is_train):
-        for label, scalar in scalars.items():
+        for label, scalar in list(scalars.items()):
             sum_name = '{}/{}'.format('Train' if is_train else 'Test', label)
             self._writer.add_scalar(sum_name, scalar, it)
 
@@ -42,7 +42,7 @@ class TBVisualizer:
         log_time = time.strftime("[%d/%m/%Y %H:%M:%S]")
         visuals_info = "v" if visuals_were_stored else ""
         message = '%s (T%s, epoch: %d, it: %d/%d, t/smpl: %.3fs) ' % (log_time, visuals_info, epoch, i, iters_per_epoch, t)
-        for k, v in errors.items():
+        for k, v in list(errors.items()):
             message += '%s:%.3f ' % (k, v)
 
         print(message)
@@ -52,7 +52,7 @@ class TBVisualizer:
     def print_current_validate_errors(self, epoch, errors, t):
         log_time = time.strftime("[%d/%m/%Y %H:%M:%S]")
         message = '%s (V, epoch: %d, time_to_val: %ds) ' % (log_time, epoch, t)
-        for k, v in errors.items():
+        for k, v in list(errors.items()):
             message += '%s:%.3f ' % (k, v)
 
         print(message)
@@ -60,7 +60,7 @@ class TBVisualizer:
             log_file.write('%s\n' % message)
 
     def save_images(self, visuals):
-        for label, image_numpy in visuals.items():
+        for label, image_numpy in list(visuals.items()):
             image_name = '%s.png' % label
             save_path = os.path.join(self._save_path, "samples", image_name)
             util.save_image(image_numpy, save_path)

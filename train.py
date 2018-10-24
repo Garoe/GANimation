@@ -18,8 +18,8 @@ class Train:
 
         self._dataset_train_size = len(data_loader_train)
         self._dataset_test_size = len(data_loader_test)
-        print('#train images = %d' % self._dataset_train_size)
-        print('#test images = %d' % self._dataset_test_size)
+        print(('#train images = %d' % self._dataset_train_size))
+        print(('#test images = %d' % self._dataset_test_size))
 
         self._model = ModelsFactory.get_by_name(self._opt.model, self._opt)
         self._tb_visualizer = TBVisualizer(self._opt)
@@ -40,14 +40,14 @@ class Train:
             self._train_epoch(i_epoch)
 
             # save model
-            print('saving the model at the end of epoch %d, iters %d' % (i_epoch, self._total_steps))
+            print(('saving the model at the end of epoch %d, iters %d' % (i_epoch, self._total_steps)))
             self._model.save(i_epoch)
 
             # print epoch info
             time_epoch = time.time() - epoch_start_time
-            print('End of epoch %d / %d \t Time Taken: %d sec (%d min or %d h)' %
+            print(('End of epoch %d / %d \t Time Taken: %d sec (%d min or %d h)' %
                   (i_epoch, self._opt.nepochs_no_decay + self._opt.nepochs_decay, time_epoch,
-                   time_epoch / 60, time_epoch / 3600))
+                   time_epoch / 60, time_epoch / 3600)))
 
             # update learning rate
             if i_epoch > self._opt.nepochs_no_decay:
@@ -85,7 +85,7 @@ class Train:
 
             # save model
             if self._last_save_latest_time is None or time.time() - self._last_save_latest_time > self._opt.save_latest_freq_s:
-                print('saving the latest model (epoch %d, total_steps %d)' % (i_epoch, self._total_steps))
+                print(('saving the latest model (epoch %d, total_steps %d)' % (i_epoch, self._total_steps)))
                 self._model.save(i_epoch)
                 self._last_save_latest_time = time.time()
 
@@ -117,14 +117,14 @@ class Train:
             errors = self._model.get_current_errors()
 
             # store current batch errors
-            for k, v in errors.iteritems():
+            for k, v in list(errors.items()):
                 if k in val_errors:
                     val_errors[k] += v
                 else:
                     val_errors[k] = v
 
         # normalize errors
-        for k in val_errors.iterkeys():
+        for k in list(val_errors.keys()):
             val_errors[k] /= self._opt.num_iters_validate
 
         # visualize

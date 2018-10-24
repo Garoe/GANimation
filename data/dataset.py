@@ -17,7 +17,7 @@ class DatasetFactory:
         else:
             raise ValueError("Dataset [%s] not recognized." % dataset_name)
 
-        print('Dataset {} was created'.format(dataset.name))
+        print(('Dataset {} was created'.format(dataset.name)))
         return dataset
 
 

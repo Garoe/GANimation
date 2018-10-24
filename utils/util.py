@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 from PIL import Image
 import numpy as np
 import os
